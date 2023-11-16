@@ -16,13 +16,15 @@ test("iletişim formu headerı render ediliyor", () => {
   expect(header).toHaveTextContent("İletişim Formu");
 });
 
-test('kullanıcı adını 5 karakterden az girdiğinde BİR hata mesajı render ediyor.', async () => {
-
+test("kullanıcı adını 5 karakterden az girdiğinde BİR hata mesajı render ediyor.", async () => {
+  render(<App />);
+  const name = screen.getByTestId("name-input");
+  fireEvent.change(name, { target: { value: "lore" } });
+  const error = screen.getByTestId("error");
+  expect(error).toHaveTextContent("Hata: ad en az 5 karakter olmalıdır.");
 });
 
-test('kullanıcı inputları doldurmadığında ÜÇ hata mesajı render ediliyor.', async () => {
-
-});
+test("kullanıcı inputları doldurmadığında ÜÇ hata mesajı render ediliyor.", async () => {});
 
 test("kullanıcı doğru ad ve soyad girdiğinde ama email girmediğinde BİR hata mesajı render ediliyor.", async () => {});
 
