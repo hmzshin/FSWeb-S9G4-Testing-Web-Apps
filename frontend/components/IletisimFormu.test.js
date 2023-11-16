@@ -92,4 +92,26 @@ test("ad,soyad, email render ediliyor. mesaj bölümü doldurulmadığında hata
   expect(errors).toHaveLength(0);
 });
 
-test("form gönderildiğinde girilen tüm değerler render ediliyor.", async () => {});
+test("form gönderildiğinde girilen tüm değerler render ediliyor.", async () => {
+  render(<App />);
+  const name = screen.getByTestId("name-input");
+  fireEvent.change(name, { target: { value: "lorem" } });
+
+  const surname = screen.getByTestId("surname-input");
+  fireEvent.change(surname, { target: { value: "lorem" } });
+
+  const email = screen.getByTestId("email-input");
+  fireEvent.change(email, { target: { value: "lorem@lorem.com" } });
+
+  const submitBtn = screen.getByTestId("submit-btn");
+  fireEvent.click(submitBtn);
+
+  const displayName = screen.getByTestId("firstnameDisplay");
+  expect(displayName).toHaveTextContent("Ad: lorem");
+
+  const displaySurname = screen.getByTestId("lastnameDisplay");
+  expect(displaySurname).toHaveTextContent("Soyad: lorem");
+
+  const displayEmail = screen.getByTestId("emailDisplay");
+  expect(displayEmail).toHaveTextContent("Email: lorem");
+});
