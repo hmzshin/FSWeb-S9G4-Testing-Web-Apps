@@ -62,7 +62,20 @@ test('geçersiz bir mail girildiğinde "email geçerli bir email adresi olmalıd
   );
 });
 
-test('soyad girilmeden gönderilirse "soyad gereklidir." mesajı render ediliyor', async () => {});
+test('soyad girilmeden gönderilirse "soyad gereklidir." mesajı render ediliyor', async () => {
+  render(<App />);
+  const name = screen.getByTestId("name-input");
+  fireEvent.change(name, { target: { value: "lorem" } });
+
+  const email = screen.getByTestId("email-input");
+  fireEvent.change(email, { target: { value: "lorem@lorem.com" } });
+
+  const submitBtn = screen.getByTestId("submit-btn");
+  fireEvent.click(submitBtn);
+
+  const error = screen.getByTestId("error");
+  expect(error).toHaveTextContent("Hata: soyad gereklidir.");
+});
 
 test("ad,soyad, email render ediliyor. mesaj bölümü doldurulmadığında hata mesajı render edilmiyor.", async () => {});
 
