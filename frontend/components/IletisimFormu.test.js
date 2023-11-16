@@ -51,7 +51,16 @@ test("kullanıcı doğru ad ve soyad girdiğinde ama email girmediğinde BİR ha
   );
 });
 
-test('geçersiz bir mail girildiğinde "email geçerli bir email adresi olmalıdır." hata mesajı render ediliyor', async () => {});
+test('geçersiz bir mail girildiğinde "email geçerli bir email adresi olmalıdır." hata mesajı render ediliyor', async () => {
+  render(<App />);
+  const email = screen.getByTestId("email-input");
+  fireEvent.change(email, { target: { value: "lorem" } });
+
+  const error = screen.getByTestId("error");
+  expect(error).toHaveTextContent(
+    "Hata: email geçerli bir email adresi olmalıdır."
+  );
+});
 
 test('soyad girilmeden gönderilirse "soyad gereklidir." mesajı render ediliyor', async () => {});
 
