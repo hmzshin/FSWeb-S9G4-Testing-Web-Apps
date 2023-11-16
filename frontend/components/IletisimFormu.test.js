@@ -77,6 +77,19 @@ test('soyad girilmeden gönderilirse "soyad gereklidir." mesajı render ediliyor
   expect(error).toHaveTextContent("Hata: soyad gereklidir.");
 });
 
-test("ad,soyad, email render ediliyor. mesaj bölümü doldurulmadığında hata mesajı render edilmiyor.", async () => {});
+test("ad,soyad, email render ediliyor. mesaj bölümü doldurulmadığında hata mesajı render edilmiyor.", async () => {
+  render(<App />);
+  const name = screen.getByTestId("name-input");
+  fireEvent.change(name, { target: { value: "lorem" } });
+
+  const surname = screen.getByTestId("surname-input");
+  fireEvent.change(surname, { target: { value: "lorem" } });
+
+  const email = screen.getByTestId("email-input");
+  fireEvent.change(email, { target: { value: "lorem@lorem.com" } });
+
+  const errors = screen.getAllByTestId("error");
+  expect(errors).toHaveLength(0);
+});
 
 test("form gönderildiğinde girilen tüm değerler render ediliyor.", async () => {});
