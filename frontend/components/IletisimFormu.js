@@ -95,6 +95,7 @@ const IletisimFormu = () => {
             name="soyad"
             value={form.soyad}
             placeholder="Mansız"
+            data-testid="surname-input"
           />
           {errors.soyad && <p data-testid="error">Hata: {errors.soyad}</p>}
         </div>
@@ -107,6 +108,7 @@ const IletisimFormu = () => {
             name="email"
             value={form.email}
             placeholder="yüzyılıngolcüsü@hotmail.com"
+            data-testid="email-input"
           />
           {errors.email && <p data-testid="error">Hata: {errors.email}</p>}
         </div>

@@ -34,7 +34,22 @@ test("kullanıcı inputları doldurmadığında ÜÇ hata mesajı render ediliyo
   expect(errors).toHaveLength(3);
 });
 
-test("kullanıcı doğru ad ve soyad girdiğinde ama email girmediğinde BİR hata mesajı render ediliyor.", async () => {});
+test("kullanıcı doğru ad ve soyad girdiğinde ama email girmediğinde BİR hata mesajı render ediliyor.", async () => {
+  render(<App />);
+  const name = screen.getByTestId("name-input");
+  fireEvent.change(name, { target: { value: "Hamza" } });
+
+  const surname = screen.getByTestId("surname-input");
+  fireEvent.change(surname, { target: { value: "Sahin" } });
+
+  const submitBtn = screen.getByTestId("submit-btn");
+  fireEvent.click(submitBtn);
+
+  const error = screen.getByTestId("error");
+  expect(error).toHaveTextContent(
+    "Hata: email geçerli bir email adresi olmalıdır."
+  );
+});
 
 test('geçersiz bir mail girildiğinde "email geçerli bir email adresi olmalıdır." hata mesajı render ediliyor', async () => {});
 
