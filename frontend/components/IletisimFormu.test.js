@@ -5,6 +5,7 @@ import userEvent from "@testing-library/user-event";
 import IletisimFormu from "./IletisimFormu";
 import App from "../App";
 import { fireEvent } from "@testing-library/react";
+import { expect, jest, test } from "@jest/globals";
 
 test("hata olmadan render ediliyor", () => {
   render(<App />);
@@ -24,7 +25,14 @@ test("kullanıcı adını 5 karakterden az girdiğinde BİR hata mesajı render 
   expect(error).toHaveTextContent("Hata: ad en az 5 karakter olmalıdır.");
 });
 
-test("kullanıcı inputları doldurmadığında ÜÇ hata mesajı render ediliyor.", async () => {});
+test("kullanıcı inputları doldurmadığında ÜÇ hata mesajı render ediliyor.", async () => {
+  render(<App />);
+  const submitBtn = screen.getByTestId("submit-btn");
+  expect(submitBtn).toHaveTextContent("Gönder");
+  fireEvent.click(submitBtn);
+  const errors = screen.getAllByTestId("error");
+  expect(errors).toHaveLength(3);
+});
 
 test("kullanıcı doğru ad ve soyad girdiğinde ama email girmediğinde BİR hata mesajı render ediliyor.", async () => {});
 
