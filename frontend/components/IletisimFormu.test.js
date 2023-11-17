@@ -88,8 +88,11 @@ test("ad,soyad, email render ediliyor. mesaj bölümü doldurulmadığında hata
   const email = screen.getByTestId("email-input");
   fireEvent.change(email, { target: { value: "lorem@lorem.com" } });
 
-  const errors = screen.getAllByTestId("error");
-  expect(errors).toHaveLength(0);
+  await waitFor(() => {
+    const errors = screen.queryAllByTestId("error");
+    console.log(errors);
+    expect(errors).toHaveLength(0);
+  });
 });
 
 test("form gönderildiğinde girilen tüm değerler render ediliyor.", async () => {
